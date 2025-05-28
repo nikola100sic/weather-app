@@ -2,11 +2,27 @@ import React from "react";
 import { Card, CardContent, Typography } from "@mui/material";
 
 const activities = {
-  Clear: ["Walk in Kalemegdan", "Bike ride at Ada", "Visit Tesla Museum"],
-  Clouds: ["Visit Museum of Yugoslavia", "Coffee at Kafeterija", "Shopping at Galerija"],
-  Rain: ["Brunch at Manufaktura", "Visit an art gallery", "Watch a movie"],
+  Clear: [
+    "Walk in Petrovaradin",
+    "Cycling tours along the Danube",
+    "Visit Museum of Vojvodina",
+  ],
+  Clouds: [
+    "Visit Museum of Novi Sad",
+    "Coffee at Trčika",
+    "Shopping at Promenada",
+  ],
+  Rain: [
+    "Brunch at Project 72",
+    "Visit an art gallery",
+    "Watch a movie at Arena Cineplex",
+  ],
   Snow: ["Stay indoors", "Read a book", "Hot drink with friends"],
-  Default: ["Explore the city", "Visit a local cafe", "Relax and enjoy your day"]
+  Default: [
+    "Explore Novi Sad",
+    "Visit a local cafe",
+    "Relax and enjoy your day",
+  ],
 };
 
 const ActivitySuggestions = ({ weather }) => {

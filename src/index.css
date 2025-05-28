@@ -1,9 +1,12 @@
 body {
   margin: 0;
   padding: 0;
+  min-height: 100vh;
   background-image: url("https://images.unsplash.com/photo-1506744038136-46273834b3fb");
   background-size: cover;
   background-position: center;
-  background-attachment: fixed;
-  min-height: 100vh;
+  background-repeat: no-repeat;
+  background-attachment: scroll;
+  font-family: "Roboto", sans-serif;
+  color: white;
 }

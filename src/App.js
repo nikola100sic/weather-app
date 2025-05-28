@@ -35,7 +35,7 @@ const App = () => {
       <Navbar city={city} onChangeCity={setCity} />
 
       <Box sx={{ padding: 2, flexGrow: 1 }}>
-        <Typography variant="h5" gutterBottom align="center">
+        <Typography variant="h5" gutterBottom align="center" color="white">
           Weather & Activity Suggestions for {city}
         </Typography>
         <Grid container spacing={2}>

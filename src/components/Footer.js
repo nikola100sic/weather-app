@@ -15,7 +15,7 @@ const Footer = () => {
       }}
     >
       <Typography variant="body2">
-        © {new Date().getFullYear()}Nikola. All rights reserved.
+        © {new Date().getFullYear()} Nikola. All rights reserved.
       </Typography>
     </Box>
   );

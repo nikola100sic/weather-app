@@ -33,11 +33,13 @@ const Navbar = ({ city, onChangeCity }) => {
       <Toolbar
         sx={{
           display: "flex",
+          flexWrap: "wrap", // Omogućava prelamanje na mobilnim
           justifyContent: "space-between",
           alignItems: "center",
           gap: 2,
         }}
       >
+        {/* Leva strana: Logo */}
         <Typography
           variant="h6"
           sx={{ display: "flex", alignItems: "center", gap: 1 }}
@@ -46,7 +48,17 @@ const Navbar = ({ city, onChangeCity }) => {
           WeatherApp
         </Typography>
 
-        <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+        {/* Desna strana: Select + Search + Icons */}
+        <Box
+          sx={{
+            display: "flex",
+            flexWrap: "wrap",
+            alignItems: "center",
+            gap: 2,
+            justifyContent: { xs: "center", sm: "flex-end" },
+            flexGrow: 1,
+          }}
+        >
           <Select
             value={city}
             onChange={(e) => {
@@ -90,6 +102,7 @@ const Navbar = ({ city, onChangeCity }) => {
               "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
                 borderColor: "white",
               },
+              minWidth: "150px",
             }}
           />
 

@@ -14,11 +14,13 @@ import WbSunnyIcon from "@mui/icons-material/WbSunny";
 import CloudIcon from "@mui/icons-material/Cloud";
 import OpacityIcon from "@mui/icons-material/Opacity";
 import CloseIcon from "@mui/icons-material/Close";
+import { useTheme } from "@mui/material/styles";
 
 const WeatherCard = ({ data }) => {
   const [open, setOpen] = useState(false);
   const { dt_txt, main, weather } = data;
   const condition = weather[0].main;
+  const theme = useTheme();
 
   const icon = {
     Clear: <WbSunnyIcon color="warning" />,
@@ -28,7 +30,13 @@ const WeatherCard = ({ data }) => {
 
   return (
     <>
-      <Card sx={{ backgroundColor: "#f5f5f5" }}>
+      <Card
+        sx={{
+          backgroundColor: theme.palette.mode === "dark" ? "#1e1e1e" : "white",
+          color: theme.palette.mode === "dark" ? "white" : "black",
+          marginBottom: 1,
+        }}
+      >
         <CardActionArea onClick={() => setOpen(true)}>
           <CardContent>
             <Box display="flex" alignItems="center" gap={1}>

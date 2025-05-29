@@ -8,6 +8,7 @@ import {
   IconButton,
   TextField,
   Box,
+  useMediaQuery,
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import Brightness4Icon from "@mui/icons-material/Brightness4";
@@ -19,13 +20,19 @@ import { ColorModeContext } from "../ThemeContext";
 const Navbar = ({ city, onChangeCity }) => {
   const theme = useTheme();
   const colorMode = useContext(ColorModeContext);
+
+  // responsivnost
+  const isXs = useMediaQuery(theme.breakpoints.down("sm"));
+
   const [input, setInput] = useState("");
+  const [showInputXs, setShowInputXs] = useState(false); // prikaz polja na telefonu
 
   const handleSearch = () => {
     if (input.trim()) {
       onChangeCity(input.trim());
       setInput("");
     }
+    if (isXs) setShowInputXs(false); // sakrije polje na telefonu
   };
 
   return (
@@ -33,32 +40,34 @@ const Navbar = ({ city, onChangeCity }) => {
       <Toolbar
         sx={{
           display: "flex",
-          flexWrap: "wrap", // Omogućava prelamanje na mobilnim
+          flexDirection: { xs: "column", sm: "row" },
+          flexWrap: "wrap",
           justifyContent: "space-between",
           alignItems: "center",
           gap: 2,
+          p: { xs: 1, sm: 2 },
         }}
       >
-        {/* Leva strana: Logo */}
+        {/* Logo */}
         <Typography
           variant="h6"
           sx={{ display: "flex", alignItems: "center", gap: 1 }}
         >
-          <WbSunnyIcon />
+          <WbSunnyIcon sx={{ fontSize: { xs: 20, sm: 28 } }} />
           WeatherApp
         </Typography>
 
-        {/* Desna strana: Select + Search + Icons */}
+        {/* Kontrole */}
         <Box
           sx={{
             display: "flex",
-            flexWrap: "wrap",
             alignItems: "center",
-            gap: 2,
-            justifyContent: { xs: "center", sm: "flex-end" },
+            gap: { xs: 1, sm: 2 },
             flexGrow: 1,
+            justifyContent: { xs: "center", sm: "flex-end" },
           }}
         >
+          {/* Select za brzi izbor grada */}
           <Select
             value={city}
             onChange={(e) => {
@@ -70,7 +79,8 @@ const Navbar = ({ city, onChangeCity }) => {
               color: "white",
               borderBottom: "1px solid white",
               "& .MuiSelect-icon": { color: "white" },
-              minWidth: "100px",
+              minWidth: { xs: 80, sm: 100 },
+              mr: { xs: 0, sm: 1 },
             }}
           >
             <MenuItem value="Belgrade">Belgrade</MenuItem>
@@ -78,43 +88,69 @@ const Navbar = ({ city, onChangeCity }) => {
             <MenuItem value="Niš">Niš</MenuItem>
           </Select>
 
-          <TextField
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            onKeyDown={(e) => e.key === "Enter" && handleSearch()}
-            size="small"
-            placeholder="Search city"
-            variant="outlined"
-            sx={{
-              input: {
-                color: theme.palette.mode === "dark" ? "white" : "black",
-              },
-              "& .MuiOutlinedInput-root": {
-                backgroundColor:
-                  theme.palette.mode === "dark" ? "#333" : "white",
-              },
-              "& .MuiOutlinedInput-notchedOutline": {
-                borderColor: "white",
-              },
-              "&:hover .MuiOutlinedInput-notchedOutline": {
-                borderColor: "white",
-              },
-              "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-                borderColor: "white",
-              },
-              minWidth: "150px",
-            }}
-          />
+          {/* Search – na telefonu prvo samo ikonica */}
+          {(showInputXs || !isXs) && (
+            <TextField
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              onKeyDown={(e) => e.key === "Enter" && handleSearch()}
+              size="small"
+              placeholder="Search city"
+              variant="outlined"
+              autoFocus={isXs && showInputXs}
+              onBlur={() => isXs && setShowInputXs(false)}
+              sx={{
+                width: { xs: 120, sm: 150, md: 200 },
+                input: {
+                  color: theme.palette.mode === "dark" ? "white" : "black",
+                  p: { xs: "4px 8px", sm: "6px 12px" },
+                },
+                "& .MuiOutlinedInput-root": {
+                  backgroundColor:
+                    theme.palette.mode === "dark" ? "#333" : "white",
+                },
+                "& .MuiOutlinedInput-notchedOutline": {
+                  borderColor: "white",
+                },
+                "&:hover .MuiOutlinedInput-notchedOutline": {
+                  borderColor: "white",
+                },
+                "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                  borderColor: "white",
+                },
+              }}
+            />
+          )}
 
-          <IconButton onClick={handleSearch} color="inherit">
-            <SearchIcon />
-          </IconButton>
+          {/* Ikonica za search (uvek), ili za otvaranje polja na XS */}
+          {isXs && !showInputXs ? (
+            <IconButton
+              onClick={() => setShowInputXs(true)}
+              color="inherit"
+              sx={{ p: 0.5 }}
+            >
+              <SearchIcon fontSize="small" />
+            </IconButton>
+          ) : (
+            <IconButton
+              onClick={handleSearch}
+              color="inherit"
+              sx={{ p: { xs: 0.5, sm: 1 } }}
+            >
+              <SearchIcon fontSize={isXs ? "small" : "medium"} />
+            </IconButton>
+          )}
 
-          <IconButton onClick={colorMode.toggleColorMode} color="inherit">
+          {/* Dark / Light toggle */}
+          <IconButton
+            onClick={colorMode.toggleColorMode}
+            color="inherit"
+            sx={{ p: { xs: 0.5, sm: 1 } }}
+          >
             {theme.palette.mode === "dark" ? (
-              <Brightness7Icon />
+              <Brightness7Icon fontSize={isXs ? "small" : "medium"} />
             ) : (
-              <Brightness4Icon />
+              <Brightness4Icon fontSize={isXs ? "small" : "medium"} />
             )}
           </IconButton>
         </Box>

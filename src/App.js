@@ -56,17 +56,22 @@ const App = () => {
             No forecast available for <strong>{city}</strong>. Try another city.
           </Typography>
         ) : (
-          <Grid container spacing={2}>
-            {weatherData.map((data, idx) => (
-              <Grid item xs={12} sm={4} key={idx}>
-                <WeatherCard data={data} />
-                <ActivitySuggestions
-                  weather={data.weather[0].main}
-                  city={city}
-                />
-              </Grid>
-            ))}
-          </Grid>
+          <>
+            <Typography variant="h5" gutterBottom align="center" color="black">
+              Weather & Activity Suggestions for {city}
+            </Typography>
+            <Grid container spacing={2}>
+              {weatherData.map((data, idx) => (
+                <Grid item xs={12} sm={4} key={idx}>
+                  <WeatherCard data={data} />
+                  <ActivitySuggestions
+                    weather={data.weather[0].main}
+                    city={city}
+                  />
+                </Grid>
+              ))}
+            </Grid>
+          </>
         )}
       </Box>
 

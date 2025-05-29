@@ -51,9 +51,19 @@ const activityMap = {
   },
 };
 
+const normalizeWeather = (weather) => {
+  if (weather === "Clear") return "Clear";
+  if (weather === "Partly Cloudy" || weather === "Clouds") return "Clouds";
+  if (weather === "Rain" || weather === "Light Rain" || weather === "Drizzle")
+    return "Rain";
+  return "Clear"; // fallback
+};
+
 const ActivitySuggestions = ({ weather, city }) => {
   const cityActivities = activityMap[city] || {};
-  const suggestions = cityActivities[weather] || cityActivities["Clear"] || [];
+  const normalizedWeather = normalizeWeather(weather);
+  const suggestions =
+    cityActivities[normalizedWeather] || cityActivities["Clear"] || [];
 
   return (
     <Card sx={{ marginTop: 1 }}>
